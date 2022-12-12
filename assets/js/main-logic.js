@@ -34,3 +34,40 @@
     // local storage def
     // which element clicked
     // working hours 
+
+
+// GLOBAL VARS START
+var workWeekStartHr = '09';
+var workWeekEndHr = '17';
+var workWeekData = [];
+// GLOBAL VARS END
+
+// FUNCTIONS START
+
+//Get current day format it and add to correct html element
+function currentDay() {
+    var currentDayDisp = moment().format('dddd, MMMM Do');
+    var currentDayEl = $('#currentDay');
+
+    console.log(currentDayEl);
+    currentDayEl.text(currentDayDisp);
+};
+
+//Construct the workday planner view
+function displayPlanner() {
+    var busTime = moment(workWeekStartHr,'HH');
+
+    while (busTime.hour() <= workWeekEndHr ) {
+        console.log (busTime.format('ddd Do hh:mm a'));
+        busTime.add(1,'hours');
+    };
+
+};
+// FUNCTIONS END
+
+// MAIN START
+
+currentDay()
+displayPlanner();
+
+// MAIN END
