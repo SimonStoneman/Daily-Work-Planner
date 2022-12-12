@@ -40,6 +40,7 @@
 var workWeekStartHr = '09';
 var workWeekEndHr = '17';
 var workWeekData = [];
+var tableHeaderCnt = ['Hour','Event','Enter'];
 // GLOBAL VARS END
 
 // FUNCTIONS START
@@ -49,17 +50,59 @@ function currentDay() {
     var currentDayDisp = moment().format('dddd, MMMM Do');
     var currentDayEl = $('#currentDay');
 
-    console.log(currentDayEl);
+    // console.log(currentDayEl);
     currentDayEl.text(currentDayDisp);
 };
 
 //Construct the workday planner view
 function displayPlanner() {
     var busTime = moment(workWeekStartHr,'HH');
+    var workWeekDataIdx = 0;
+
+    var plannerParentBlk = $('.container');
+    var targetEle = '';
+    var tableEle = document.createElement('table');
+    var tableRowEle = document.createElement('tr');
+    var tableHeadEle = '<th></th>';
+    // var tableHeadEle = 'th';
+    var tableDataEle = document.createElement('td');
+
+    //Add table ele after div with class .container
+    plannerParentBlk.append(tableEle);
+
+    //Reset targetele to next level ele e.g. <table>
+    targetEle = $(tableEle);
+
+    // console.log ('Search parent blk for table tag ');
+    // console.log (plannerParentBlk);
+
+    //Add row ele after table ele
+    targetEle.append(tableRowEle);
+
+    // targetEle = $(tableRowEle);
+
+    for (var tableHeaderCntr = 0; tableHeaderCntr < tableHeaderCnt.length; tableHeaderCntr++)  {
+
+        targetEle = $(tableRowEle);
+        targetEle.append(tableHeadEle);
+
+        targetEle = $('th').eq(tableHeaderCntr);
+
+        //Add text to header ele
+        targetEle.text(tableHeaderCnt[tableHeaderCntr]);
+    };
 
     while (busTime.hour() <= workWeekEndHr ) {
-        console.log (busTime.format('ddd Do hh:mm a'));
+
+        // Create planner row data based on current hour
+        workWeekData[workWeekDataIdx] = {
+            hour: busTime,
+            event: ''
+            };
+
+        // console.log (busTime.format('ddd Do hh:mm a'));
         busTime.add(1,'hours');
+        workWeekDataIdx++
     };
 
 };
@@ -69,5 +112,6 @@ function displayPlanner() {
 
 currentDay()
 displayPlanner();
+// console.log (workWeekData[0].hour);
 
 // MAIN END
