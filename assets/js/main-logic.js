@@ -42,7 +42,7 @@ var workWeekEndHr = '17';
 var workWeekData = [];
 var tableHeaderCnt = ['Hour','Event','Enter'];
 var presentTimeColourClass = 'present';
-var currentHourColourClass = 'hour'
+var futureTimeColourClass = 'future'
 var pastTimeColourClass = 'past';
 // GLOBAL VARS END
 
@@ -58,25 +58,58 @@ function currentDay() {
 };
 
 function checkCurrentTime (){
-    var currentTime = moment().hour
+    var currentTime = moment().format('HH')
+    // var currentTime = '12';
 
+    // console.log('func - checkCurrentTime: currenttime is: ' + currentTime);
     return(currentTime);
 };
 
-function applyColor(){
-    var elementsToChng = '';
-    var classToApply = '';
+function applyColor(eles, colourclass){
+    var elementsToChng = eles;
+    var classToApply = colourclass;
 
-    for () {
-        elementsToChng[].addClass(classToApply)
-    }
+    // console.log(elementsToChng)
+    // for (var ele of elementsToChng) {
+    //     console.log(ele);
+        // ele.classList.add(classToApply);
+        elementsToChng.classList.add(classToApply);
+    // }
 }
 
 function formatScheduler(){
-    var allTextareas = $('th textarea');
+    // var allTextareas = $('th textarea');
+    var allHourTableHeaders = $('th:nth-child(1)');
+    var allEventTableHeaders = $('th:nth-child(2)');
+    
+    var allHours = $('th:eq(0)')
     var currentHourTextarea = '';
     var pastTextareas = '';
+    var currentHour = '';
+    var arrIndex = 0;
 
+    currentHour = checkCurrentTime();
+
+    // console.log(allHourTableHeaders);
+    // console.log(allEventTableHeaders);
+
+    while (allEventTableHeaders[arrIndex] !== undefined) {
+
+        // console.log(allTableHeaders[arrIndex]);
+        applyColor(allEventTableHeaders[arrIndex], pastTimeColourClass)
+
+        if (allHourTableHeaders[arrIndex].innerText == currentHour) {
+            // applyColor(allTextareas, pastTimeColourClass);
+            // console.log('current hour is: ' + currentHour);
+            applyColor(allEventTableHeaders[arrIndex], presentTimeColourClass)
+            
+        } else if (allHourTableHeaders[arrIndex].innerText > currentHour) {
+            
+            applyColor(allEventTableHeaders[arrIndex], futureTimeColourClass)
+        };
+
+        arrIndex++;
+    }
 };
 
 
@@ -157,8 +190,9 @@ function displayPlanner() {
 
 // MAIN START
 
-currentDay()
+currentDay();
 // displayPlanner();
 // console.log (workWeekData[0].hour);
+formatScheduler();
 
 // MAIN END

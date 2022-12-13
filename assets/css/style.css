@@ -26,14 +26,25 @@ textarea {
 }
 
 .time-block {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   text-align: center;
   border-radius: 15px;
 }
 
-.row {
+.row /*.column*/ {
+  display: grid;
+  grid-template-columns: 100px 6fr 100px;
   white-space: pre-wrap;
   height: 80px;
   border-top: 1px solid white;
+  width:2000px;
+  align-items: center;
+}
+
+.column {
+  /*width: 1fr 1fr 1fr;*/
+  height: 100px;
 }
 
 .hour {
@@ -63,6 +74,8 @@ textarea {
   border-bottom-right-radius: 15px;
   background-color: #06aed5;
   color: white;
+  height: 80px;
+  padding: 0 50px;
 }
 
 .saveBtn i:hover {
