@@ -41,6 +41,9 @@ var workWeekStartHr = '09';
 var workWeekEndHr = '17';
 var workWeekData = [];
 var tableHeaderCnt = ['Hour','Event','Enter'];
+var presentTimeColourClass = 'present';
+var currentHourColourClass = 'hour'
+var pastTimeColourClass = 'past';
 // GLOBAL VARS END
 
 // FUNCTIONS START
@@ -54,6 +57,29 @@ function currentDay() {
     currentDayEl.text(currentDayDisp);
 };
 
+function checkCurrentTime (){
+    var currentTime = moment().hour
+
+    return(currentTime);
+};
+
+function applyColor(){
+    var elementsToChng = '';
+    var classToApply = '';
+
+    for () {
+        elementsToChng[].addClass(classToApply)
+    }
+}
+
+function formatScheduler(){
+    var allTextareas = $('th textarea');
+    var currentHourTextarea = '';
+    var pastTextareas = '';
+
+};
+
+
 //Construct the workday planner view
 function displayPlanner() {
     var busTime = moment(workWeekStartHr,'HH');
@@ -62,7 +88,7 @@ function displayPlanner() {
     var plannerParentBlk = $('.container');
     var targetEle = '';
     var tableEle = document.createElement('table');
-    var tableRowEle = document.createElement('tr');
+    var tableRowEle = '<tr></tr>';
     var tableHeadEle = '<th></th>';
     // var tableHeadEle = 'th';
     var tableDataEle = document.createElement('td');
@@ -73,36 +99,57 @@ function displayPlanner() {
     //Reset targetele to next level ele e.g. <table>
     targetEle = $(tableEle);
 
-    // console.log ('Search parent blk for table tag ');
-    // console.log (plannerParentBlk);
-
     //Add row ele after table ele
     targetEle.append(tableRowEle);
 
-    // targetEle = $(tableRowEle);
-
+    //Write out table header
     for (var tableHeaderCntr = 0; tableHeaderCntr < tableHeaderCnt.length; tableHeaderCntr++)  {
 
-        targetEle = $(tableRowEle);
-        targetEle.append(tableHeadEle);
+        // var targetEleHBlk = $(tableRowEle);
+        var targetEleHBlk = $('tr');
+        targetEleHBlk.append(tableHeadEle);
 
-        targetEle = $('th').eq(tableHeaderCntr);
+        targetEleHBlk = $('th').eq(tableHeaderCntr);
 
         //Add text to header ele
-        targetEle.text(tableHeaderCnt[tableHeaderCntr]);
+        targetEleHBlk.text(tableHeaderCnt[tableHeaderCntr]);
     };
 
-    while (busTime.hour() <= workWeekEndHr ) {
+    // Create target var and assign to tr created for header data
+    var targetElePBlk = $('tr').eq(workWeekDataIdx);
 
+    //console.log (targetElePBlk);
+    targetElePBlk.after(tableRowEle);
+    //Write out planner 
+    while (busTime.hour() <= workWeekEndHr ) {
+        var currentTblRow ='';
+        var currentTblRowHedr = '';
+        // console.log(busTime.hour());
+        workWeekDataIdx++
         // Create planner row data based on current hour
-        workWeekData[workWeekDataIdx] = {
-            hour: busTime,
-            event: ''
-            };
+        // workWeekData[workWeekDataIdx] = {
+        //     hour: busTime,
+        //     event: ''
+        //     };
+        
+        // Add row element to previous row element containing header details
+        // targetElePBlk.append(tableRowEle);
+        currentTblRow = $('tr:eq(workWeekDataIdx)');
+
+        // for (var tableHeaderCntr = 0; tableHeaderCntr < tableHeaderCnt.length; tableHeaderCntr++)  {
+            // Add header element to row element
+            currentTblRow.append(tableHeadEle);
+
+    //         currentTblRowHedr = $('tr:eq(workWeekDataIdx) th:eq(0)');
+    // console.log(currentTblRowHedr);
+    //         //Add text to header ele
+    //         currentTblRowHedr.text(busTime.hour());
+        // };
+
 
         // console.log (busTime.format('ddd Do hh:mm a'));
+        currentTblRow.after(tableRowEle);
         busTime.add(1,'hours');
-        workWeekDataIdx++
     };
 
 };
@@ -111,7 +158,7 @@ function displayPlanner() {
 // MAIN START
 
 currentDay()
-displayPlanner();
+// displayPlanner();
 // console.log (workWeekData[0].hour);
 
 // MAIN END
