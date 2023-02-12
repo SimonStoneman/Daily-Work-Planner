@@ -79,10 +79,10 @@ function applyColor(eles, colourclass){
 
 function formatScheduler(){
     // var allTextareas = $('th textarea');
-    var allHourTableHeaders = $('th:nth-child(1)');
-    var allEventTableHeaders = $('th:nth-child(2)');
+    var allHourTableHeaders = $('td:nth-child(1)');
+    var allEventTableHeaders = $('td:nth-child(2)');
     
-    var allHours = $('th:eq(0)')
+    var allHours = $('td:eq(0)')
     var currentHourTextarea = '';
     var pastTextareas = '';
     var currentHour = '';
@@ -124,68 +124,69 @@ function displayPlanner() {
     var tableRowEle = '<tr></tr>';
     var tableHeadEle = '<th></th>';
     // var tableHeadEle = 'th';
-    var tableDataEle = document.createElement('td');
+    // var tableDataEle = document.createElement('td');
 
-    //Add table ele after div with class .container
-    plannerParentBlk.append(tableEle);
+    // //Add table ele after div with class .container
+    // plannerParentBlk.append(tableEle);
 
-    //Reset targetele to next level ele e.g. <table>
-    targetEle = $(tableEle);
+    // //Reset targetele to next level ele e.g. <table>
+    // targetEle = $(tableEle);
 
-    //Add row ele after table ele
-    targetEle.append(tableRowEle);
+    // //Add row ele after table ele
+    // targetEle.append(tableRowEle);
 
-    //Write out table header
-    for (var tableHeaderCntr = 0; tableHeaderCntr < tableHeaderCnt.length; tableHeaderCntr++)  {
+    // //Write out table header
+    // for (var tableHeaderCntr = 0; tableHeaderCntr < tableHeaderCnt.length; tableHeaderCntr++)  {
 
-        // var targetEleHBlk = $(tableRowEle);
-        var targetEleHBlk = $('tr');
-        targetEleHBlk.append(tableHeadEle);
+    //     // var targetEleHBlk = $(tableRowEle);
+    //     var targetEleHBlk = $('tr');
+    //     targetEleHBlk.append(tableHeadEle);
 
-        targetEleHBlk = $('th').eq(tableHeaderCntr);
+    //     targetEleHBlk = $('th').eq(tableHeaderCntr);
 
-        //Add text to header ele
-        targetEleHBlk.text(tableHeaderCnt[tableHeaderCntr]);
-    };
+    //     //Add text to header ele
+    //     targetEleHBlk.text(tableHeaderCnt[tableHeaderCntr]);
+    // };
 
-    // Create target var and assign to tr created for header data
-    var targetElePBlk = $('tr').eq(workWeekDataIdx);
+    // // Create target var and assign to tr created for header data
+    // var targetElePBlk = $('tr').eq(workWeekDataIdx);
 
-    //console.log (targetElePBlk);
-    targetElePBlk.after(tableRowEle);
-    //Write out planner 
-    while (busTime.hour() <= workWeekEndHr ) {
-        var currentTblRow ='';
-        var currentTblRowHedr = '';
-        // console.log(busTime.hour());
-        workWeekDataIdx++
-        // Create planner row data based on current hour
-        // workWeekData[workWeekDataIdx] = {
-        //     hour: busTime,
-        //     event: ''
-        //     };
+    // //console.log (targetElePBlk);
+    // targetElePBlk.after(tableRowEle);
+    // //Write out planner 
+    // while (busTime.hour() <= workWeekEndHr ) {
+    //     var currentTblRow ='';
+    //     var currentTblRowHedr = '';
+    //     // console.log(busTime.hour());
+    //     workWeekDataIdx++
+    //     // Create planner row data based on current hour
+    //     // workWeekData[workWeekDataIdx] = {
+    //     //     hour: busTime,
+    //     //     event: ''
+    //     //     };
         
-        // Add row element to previous row element containing header details
-        // targetElePBlk.append(tableRowEle);
-        currentTblRow = $('tr:eq(workWeekDataIdx)');
+    //     // Add row element to previous row element containing header details
+    //     // targetElePBlk.append(tableRowEle);
+    //     currentTblRow = $('tr:eq(workWeekDataIdx)');
 
-        // for (var tableHeaderCntr = 0; tableHeaderCntr < tableHeaderCnt.length; tableHeaderCntr++)  {
-            // Add header element to row element
-            currentTblRow.append(tableHeadEle);
+    //     // for (var tableHeaderCntr = 0; tableHeaderCntr < tableHeaderCnt.length; tableHeaderCntr++)  {
+    //         // Add header element to row element
+    //         currentTblRow.append(tableHeadEle);
 
-    //         currentTblRowHedr = $('tr:eq(workWeekDataIdx) th:eq(0)');
-    // console.log(currentTblRowHedr);
-    //         //Add text to header ele
-    //         currentTblRowHedr.text(busTime.hour());
-        // };
+    // //         currentTblRowHedr = $('tr:eq(workWeekDataIdx) th:eq(0)');
+    // // console.log(currentTblRowHedr);
+    // //         //Add text to header ele
+    // //         currentTblRowHedr.text(busTime.hour());
+    //     // };
 
 
-        // console.log (busTime.format('ddd Do hh:mm a'));
-        currentTblRow.after(tableRowEle);
-        busTime.add(1,'hours');
-    };
+    //     // console.log (busTime.format('ddd Do hh:mm a'));
+    //     currentTblRow.after(tableRowEle);
+    //     busTime.add(1,'hours');
+    // };
 
 };
+
 // FUNCTIONS END
 
 // MAIN START
@@ -194,5 +195,40 @@ currentDay();
 // displayPlanner();
 // console.log (workWeekData[0].hour);
 formatScheduler();
+
+// $('.saveBtn').click(function(){
+//   var currentEle = this;
+//   console.log(currentEle);
+// });
+
+function addEvent () {
+    // get the current row
+    var currentRow=$(this).closest("tr"); 
+    
+    var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+    var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+    var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+    var data=col1+"\n"+col2+"\n"+col3;
+
+    event.preventDefault();
+    
+    alert(data);
+};
+
+// code to read selected table row cell data (values).
+$(".time-block").on('click', '.saveBtn', addEvent);
+// {
+    // get the current row
+    // var currentRow=$(this).closest("tr"); 
+    
+    // var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+    // var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+    // var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+    // var data=col1+"\n"+col2+"\n"+col3;
+
+    // this.preventDefault();
+    
+    // alert(data);
+// };
 
 // MAIN END
